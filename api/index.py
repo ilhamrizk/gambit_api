@@ -1,13 +1,23 @@
 # main.py
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 import os
 
 app = FastAPI()
 
-SUPABASE_URL = "https://oktqikjeapcxoffhdeyk.supabase.co"
-SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rdHFpa2plYXBjeG9mZmhkZXlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA1NjA2MDAsImV4cCI6MjA2NjEzNjYwMH0.RfY62PjWoc2vnEH0FffSsX92YzZrfvISPriG027-LWs"
+# ✅ Aktifkan CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # atau ["http://localhost:5173"] untuk lebih ketat
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_API_KEY = os.getenv("SUPABASE_API_KEY")
 
 headers = {
     "apikey": SUPABASE_API_KEY,
